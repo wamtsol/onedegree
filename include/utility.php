@@ -41,7 +41,7 @@ function check_admin_cookie(){
 	return false;
 }
 /*--------------Image Type Validation--------------*/
-$file_upload_root="./uploads/";
+$file_upload_root="../uploads/";
 $file_upload_url=$site_url."/uploads/";
 $imagetypes=array("image/bmp","image/x-windows-bmp","image/jpg","image/jpeg","image/pjpeg","image/gif","image/png","image/x-png");
 $ziptypes=array("rar","zip");
