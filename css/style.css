@@ -4483,7 +4483,8 @@ body.popup-content {
 .applogo {
     padding: 20px 25px;
 }
-.page-header .btn.btn-light:last-child {
+.hyd .applogo {
+  padding: 7px 25px;
 }
 .text-right{
 	text-align:right;
