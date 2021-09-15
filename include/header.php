@@ -18,7 +18,7 @@
 <script type="text/javascript" src="js/popup.js"></script>
 </head>
 <body>
-	<div id="wrapper" class="round_corners">		
+	<div id="wrapper" class="round_corners <?php echo $_SERVER['SERVER_NAME'] == 'hyd.1degreecentigrade.pk'?"hyd":""?>">		
     	<div id="top" class="clearfix">
             <div class="applogo">
                 <a href="index.php" class="logo"><?php $admin_logo=get_config("admin_logo"); if(empty($admin_logo)) echo $site_title; else { ?><img src="<?php echo $file_upload_root;?>config/<?php echo $admin_logo?>" /><?php }?></a>
