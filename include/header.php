@@ -49,35 +49,35 @@
 					$parents=doquery("select * from menu a inner join menu_2_admin_type b on a.id = b.menu_id where parent_id=0 and admin_type_id='".$_SESSION["logged_in_admin"]["admin_type_id"]."' order by sortorder",$dblink);
 					if(numrows($parents)>0){
 						while($parent=dofetch($parents)){
-						?>
-						<li>
-                        	<a href="<?php echo unslash($parent["url"])?>"><span class="icon color5"><i class="fa fa-<?php echo unslash($parent["small_icon"])?>"></i></span><?php echo unslash($parent["title"])?>
-							<?php
+							?>
+							<li>
+								<a href="<?php echo unslash($parent["url"])?>"><span class="icon color5"><i class="fa fa-<?php echo unslash($parent["small_icon"])?>"></i></span><?php echo unslash($parent["title"])?>
+								<?php
 								$submenus=doquery("select * from menu a inner join menu_2_admin_type b on a.id = b.menu_id where parent_id='".$parent["id"]."' and admin_type_id='".$_SESSION["logged_in_admin"]["admin_type_id"]."' order by sortorder",$dblink);
 								if(numrows($submenus)>0){
 									?>
-                                <span class="caret"></span></a>
-                                <ul>
-                                	<?php
-                                    while($submenu=dofetch($submenus)){
-										?>
-										<li><a href="<?php echo unslash($submenu["url"])?>"><span class="icon color5"><i class="fa fa-<?php echo unslash($submenu["small_icon"])?>"></i></span><?php echo unslash($submenu["title"])?></a></li>
+									<span class="caret"></span></a>
+									<ul>
 										<?php
-									}
-									?>
-                                </ul>
-                                <?php
-                            }
-							else{
-								echo "</a>";
-							}
-							?>
-						</li>	
-						<?php
+										while($submenu=dofetch($submenus)){
+											?>
+											<li><a href="<?php echo unslash($submenu["url"])?>"><span class="icon color5"><i class="fa fa-<?php echo unslash($submenu["small_icon"])?>"></i></span><?php echo unslash($submenu["title"])?></a></li>
+											<?php
+										}
+										?>
+									</ul>
+									<?php
+								}
+								else{
+									echo "</a>";
+								}
+								?>
+							</li>	
+							<?php
+						}
 					}
-				}
-				?>
-         	</ul>
+					?>
+			</ul>
             <ul class="sidebar-panel nav">
                 <li class="sidetitle">Account</li>
                 <li><a href="admin_manage.php?tab=edit&id=<?php echo $_SESSION["logged_in_admin"]["id"]?>"><span class="icon color15"><i class="fa fa-columns"></i></span>Edit Profile</a></li>
