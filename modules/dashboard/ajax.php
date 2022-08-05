@@ -36,6 +36,7 @@ if( count( $_POST ) > 0 ) {
 									"id" => $r2[ "id" ],
 									"title" => unslash( $r2[ "title" ] ),
 									"unit_price" => $r2[ "unit_price" ],
+									"small_glass_price" => $r2[ "small_glass_price" ],
 									"image" => !empty($r2[ "image" ])?$file_upload_root."item/".unslash( $r2[ "image" ] ):""
 								);
 							}
@@ -100,22 +101,28 @@ if( count( $_POST ) > 0 ) {
 			case "save_order":
 				$err = array();
 				$order= json_decode($order);
+				// print_r($order);die;
 				if( isset( $order->items ) && is_array( $order->items ) ) {
 					if( count( $order->items ) > 0 ) {
 						if( isset( $order->id ) && is_numeric( $order->id ) ) {
 							$grand_total_price=$total_quantity=0;
 							foreach( $order->items as $item ) {
-								$total_price = $item->unit_price*$item->quantity;
+								if($item->is_small_price==1){
+									$total_price = $item->small_glass_price*$item->quantity;
+								}
+								else{
+									$total_price = $item->unit_price*$item->quantity;
+								}
 								$grand_total_price+=$total_price;
 								$total_quantity+=$item->quantity;
 								$sale_item = doquery( "select * from sales_items where sale_id = '".$order->id."' and item_id='".$item->id."'", $dblink );
 								if( numrows( $sale_item ) > 0 ) {
 									$quanity_difference = $item->quantity - $sale_item[ "quanity" ];
-									doquery( "update sales_items set quantity='".$item->quantity."', total_price='".$total_price."' where id='".$sale_item["id"]."'", $dblink );
+									doquery( "update sales_items set quantity='".$item->quantity."', is_small_glass='".$item->is_small_price."', total_price='".$total_price."' where id='".$sale_item["id"]."'", $dblink );
 								}
 								else{
 									$quanity_difference = $item->quantity;
-									doquery("insert into sales_items(sales_id, item_id, unit_price, quantity, total_price) values('".$sale_id."', '".$item->id."', '".$item->unit_price."', '".$item->quantity."', '".$total_price."')", $dblink);
+									doquery("insert into sales_items(sales_id, item_id, unit_price, quantity, total_price, is_small_glass) values('".$sale_id."', '".$item->id."', '".$item->is_small_price==1?$item->small_glass_price:$item->unit_price."', '".$item->quantity."', '".$total_price."', '".$item->is_small_glass."',)", $dblink);
 								}
 								$r=doquery("select * from item_group where group_item_id='".$item->id."'", $dblink);
 								if(numrows($r) > 0){
@@ -135,11 +142,18 @@ if( count( $_POST ) > 0 ) {
 							$dedcutQty=0;
 							foreach( $order->items as $item ) {
 								$quantity = $item->quantity;
-								$unit_price = $item->unit_price;
-								$total_price = $item->unit_price*$item->quantity;
+								if($item->is_small_price==1){
+									$unit_price = $item->small_glass_price;
+									$total_price = $item->small_glass_price*$item->quantity;
+								}
+								else{
+									$unit_price = $item->unit_price;
+									$total_price = $item->unit_price*$item->quantity;
+									$item->is_small_price = 0;
+								}
 								$grand_total_price+=$total_price;
 								$total_quantity+=$item->quantity;
-								doquery("insert into sales_items(sales_id, item_id, unit_price, quantity, total_price) values('".$order_id."', '".$item->id."', '".$item->unit_price."', '".$item->quantity."', '".$total_price."')", $dblink);									
+								doquery("insert into sales_items(sales_id, item_id, unit_price, quantity, total_price, is_small_glass) values('".$order_id."', '".$item->id."', '".$unit_price."', '".$item->quantity."', '".$total_price."', '".$item->is_small_price."')", $dblink);									
 								$r=doquery("select *  from item_group where group_item_id='".$item->id."'", $dblink);
 								if(numrows($r) > 0){
 									while($rs=dofetch($r)){

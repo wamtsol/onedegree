@@ -83,6 +83,16 @@ if(!defined("APP_START")) die("No Direct Access");
             </div>
         </div>
   	</div>
+    <div class="form-group">
+    	<div class="row">
+            <div class="col-sm-2 control-label">
+                <label class="form-label" for="small_glass_price">Small Glass Price </label>
+            </div>
+            <div class="col-sm-10">
+                <input type="text" value="<?php echo $small_glass_price; ?>" name="small_glass_price" id="small_glass_price" class="form-control" title="Enter Small Glass Price">
+            </div>
+        </div>
+  	</div>
   	<div class="form-group">
     	<div class="row">
             <div class="col-sm-2 control-label">

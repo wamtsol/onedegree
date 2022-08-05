@@ -27,14 +27,25 @@ angular.module('dashboard', ['ngAnimate', 'angularMoment']).controller('dashboar
 				return 0;
 			}
 		}
-		
 		$scope.order_item_add = function( product ) {
 			if( $filter('filter')($scope.new_order.items, {id: product.id}).length > 0 ) {
 				$filter('filter')($scope.new_order.items, {id: product.id})[0].quantity++;
 			}
 			else{
-				$scope.new_order.items.push({id: product.id, title: product.title, unit_price: product.unit_price, quantity: 1});
+				$scope.new_order.items.push({id: product.id, title: product.title, unit_price: product.unit_price, small_glass_price: product.small_glass_price, quantity: 1, is_small_price: false});
 			}
+		}
+		$scope.update_glass = function(index){
+			$scope.new_order.items[index].is_small_price = !$scope.new_order.items[index].is_small_price;
+			// if( $scope.new_order.items[index].is_small_price ){
+			// 	if( $scope.new_order.account_id == '' ) {
+			// 		$scope.new_order.account_id = $scope.petty_cash.id
+			// 	}
+			// 	$scope.new_order.payment_amount = $scope.order_total();
+			// }
+			// else{
+			// 	$scope.new_order.payment_amount = 0;
+			// }
 		}
 		$scope.order_item_remove = function( product ) { 
 		  	if( $filter('filter')($scope.new_order.items, {id: product.id}).length > 0 ) {
@@ -52,6 +63,7 @@ angular.module('dashboard', ['ngAnimate', 'angularMoment']).controller('dashboar
 		$scope.save_order = function () {
 			if( $scope.processing == false ){
 				$scope.processing = true;
+				console.log($scope.new_order);
 				data = {action: 'save_order', order: JSON.stringify( $scope.new_order )};
 				$scope.wctAJAX( data, function( response ){
 					$scope.processing = false;
@@ -145,13 +157,20 @@ angular.module('dashboard', ['ngAnimate', 'angularMoment']).controller('dashboar
 			}
 			return total;
 		}
+		
 		$scope.order_total = function( order ) {
 			if( typeof order === "undefined" ){
 				order = $scope.new_order;
 			}
 			total = 0;
 			for( i = 0; i < order.items.length; i++ ) {
-				total += (parseFloat(order.items[ i ].unit_price) * parseFloat(order.items[ i ].quantity));
+				if($scope.new_order.items[i].is_small_price){	
+					total += (parseFloat(order.items[ i ].small_glass_price) * parseFloat(order.items[ i ].quantity));
+				}
+				else{
+					total += (parseFloat(order.items[ i ].unit_price) * parseFloat(order.items[ i ].quantity));
+				}
+				
 			}
 			return total;
 		}
@@ -190,14 +209,17 @@ angular.module('dashboard', ['ngAnimate', 'angularMoment']).controller('dashboar
 			}
 			return total;
 		}
-		$scope.order_total = function( order ) {
+		$scope.order_total_list = function( order ) {
 			if( typeof order === "undefined" ){
 				order = $scope.new_order;
 			}
 			total = 0;
 			for( i = 0; i < order.items.length; i++ ) {
-				total += (parseFloat(order.items[ i ].unit_price) * parseFloat(order.items[ i ].quantity));
+				
+					total += (parseFloat(order.items[ i ].unit_price) * parseFloat(order.items[ i ].quantity));
+				
 			}
+			// console.log(total);
 			return total;
 		}
 		$scope.print_receipt = function( id ) {

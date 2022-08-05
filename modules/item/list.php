@@ -92,8 +92,8 @@ $orderby = $order_by." ".$order;
     	<div class="btn-group" role="group" aria-label="..."> 
         	<a href="items_manage.php?tab=add" class="btn btn-light editproject">Add New Record</a> 
             <a id="topstats" class="btn btn-light" href="#"><i class="fa fa-search"></i></a> 
-            <a class="btn print-btn" href="items_manage.php?tab=report"><i class="fa fa-print" aria-hidden="true"></i></a>
-            <a class="btn btn-primary" href="items_manage.php?tab=update_items"><i  aria-hidden="true"></i>Update Item</a>   
+            <!-- <a class="btn print-btn" href="items_manage.php?tab=report"><i class="fa fa-print" aria-hidden="true"></i></a> -->
+            <!-- <a class="btn btn-primary" href="items_manage.php?tab=update_items"><i  aria-hidden="true"></i>Update Item</a>    -->
     	</div> 
     </div> 
 </div> 
@@ -152,12 +152,12 @@ $orderby = $order_by." ".$order;
 	<table class="table table-hover list">
     	<thead>
             <tr>
-                <th width="5%" class="text-center">S.no</th>
-                <th class="text-center" width="5%"><div class="checkbox checkbox-primary">
+                <th width="2%" class="text-center">S.no</th>
+                <th class="text-center" width="3%"><div class="checkbox checkbox-primary">
                     <input type="checkbox" id="select_all" value="0" title="Select All Records">
                     <label for="select_all"></label></div></th>
                 <th width="12%">Item Category</th>
-                <th width="12%">
+                <th width="10%">
                 	<a href="items_manage.php?order_by=type&order=<?php echo $order=="asc"?"desc":"asc"?>" class="sorting">
                     	Product Type 
                         <?php
@@ -199,6 +199,20 @@ $orderby = $order_by." ".$order;
 						?>
  					</a>
                 </th>
+                <th class="text-right" width="12%">
+                	<a href="items_manage.php?order_by=small_glass_price&order=<?php echo $order=="asc"?"desc":"asc"?>" class="sorting">
+                    	Small Glass Price
+                        <?php
+						if( $order_by == "small_glass_price" ) {
+							?>
+							<span class="sort-icon">
+                                <i class="fa fa-angle-<?php echo $order=="asc"?"up":"down"?>" data-hover_in="<?php echo $order=="asc"?"down":"up"?>" data-hover_out="<?php echo $order=="desc"?"down":"up"?>" aria-hidden="true"></i>
+                            </span>
+							<?php
+						}
+						?>
+ 					</a>
+                </th>
                 <th class="text-right" width="8%">
                 	<a href="items_manage.php?order_by=quantity&order=<?php echo $order=="asc"?"desc":"asc"?>" class="sorting">
                     	Quantity
@@ -213,7 +227,7 @@ $orderby = $order_by." ".$order;
 						?>
  					</a>
                 </th>
-                <th class="text-center" width="10%">Item Group</th>
+                <th class="text-center" width="8%">Item Group</th>
                 <th class="text-center" width="5%">Status</th>
                 <th class="text-center" width="10%">Actions</th>
             </tr>
@@ -237,6 +251,7 @@ $orderby = $order_by." ".$order;
                         <td><?php echo getProductType(unslash($r["type"])); ?></td>
                         <td><?php echo unslash($r["title"]); ?></td>
                         <td class="text-right"><?php echo curr_format(unslash($r["unit_price"])); ?></td>
+                        <td class="text-right"><?php echo curr_format(unslash($r["small_glass_price"])); ?></td>
                         <td class="text-right"><?php echo unslash($r["quantity"]); ?></td>
                         <td class="text-center">
                         	<?php
@@ -283,14 +298,14 @@ $orderby = $order_by." ".$order;
                         </select>
                         <input type="button" name="apply" value="Apply" id="apply_bulk_action" class="btn btn-light" title="Apply Action"  />
                     </td>
-                    <td colspan="5" class="paging" title="Paging" align="right"><?php echo pages_list($rows, "items", $sql, $pageNum)?></td>
+                    <td colspan="6" class="paging" title="Paging" align="right"><?php echo pages_list($rows, "items", $sql, $pageNum)?></td>
                 </tr>
                 <?php	
             }
             else{	
                 ?>
                 <tr>
-                    <td colspan="11"  class="no-record">No Result Found</td>
+                    <td colspan="12"  class="no-record">No Result Found</td>
                 </tr>
                 <?php
             }

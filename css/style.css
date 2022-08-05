@@ -4883,3 +4883,35 @@ html, body, #wrapper{
 	height:46px;
 }
 }
+.items-margin li input[type="checkbox"] {
+  line-height: normal;
+  margin: 4px 0 0;
+  height: auto;
+  border: none;
+  box-shadow: none;
+  background: none;
+  width: 20px;
+  height: 16px;
+  margin-left: 5px;
+}
+.items-margin li label {
+  font-size: 14px;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+span.check-glass {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  border: solid 1px;
+  border-radius: 5px;
+  line-height: 18px;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 0 10px;
+  vertical-align: middle;
+}
+span.check-glass.active {
+  background-color: #0a0;
+  color: #fff;
+}

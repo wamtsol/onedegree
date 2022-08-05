@@ -9,7 +9,7 @@ if(isset($_POST["items_edit"])){
 		$err.="Image format not supported. <br>";
 	}
 	if($err==""){
-		$sql="Update items set `item_category_id`='".slash($item_category_id)."',`type`='".slash($type)."',`title`='".slash($title)."',`unit_price`='".slash($unit_price)."', `quantity`='".slash($quantity)."', `sortorder`='".slash($sortorder)."' where id='".$id."'";
+		$sql="Update items set `item_category_id`='".slash($item_category_id)."',`type`='".slash($type)."',`title`='".slash($title)."',`unit_price`='".slash($unit_price)."', `quantity`='".slash($quantity)."', `sortorder`='".slash($sortorder)."', `small_glass_price`='".slash($small_glass_price)."' where id='".$id."'";
 		doquery($sql,$dblink);
 		if(!empty($_FILES["image"]["tmp_name"]) || isset($delete_image)){
 			$prev_icon=doquery("select image from items where id='".$id."'",$dblink);

@@ -72,11 +72,11 @@ $page="index"
                 	<td>{{ order.date }}</td>
                     <td>
                     	<ul>
-                            <li ng-repeat="item in order.items">{{ item.quantity }} x {{ item.title }}</li>
+                            <li ng-repeat="item in order.items">{{ item.quantity }} x {{ item.title }} <span ng-if="item.is_small_price=='1'">Small Glass</span> <span ng-if="item.is_small_price!='1'">Large Glass</span></li>
                         </ul>
                     </td>
                 	<td class="text-right">{{ order_total_items(order) }}</td>
-                	<td class="text-right">{{ order_total(order)|currency:'Rs. ':0 }}</td>
+                	<td class="text-right">{{ order_total_list(order)|currency:'Rs. ':0 }}</td>
                 	<td class="text-center">
                     	<a href="" title="Print" ng-click="print_receipt(order.id)"><i class="fa fa-print" aria-hidden="true"></i></a>
                     </td>
@@ -139,7 +139,12 @@ $page="index"
             <div class="col-md-5 items-margin">
                 <strong>Items Name</strong>
                 <ul>
-                    <li ng-repeat="item in new_order.items">{{ item.quantity }} x {{ item.title }}</li>
+                    <li ng-repeat="item in new_order.items">
+                        {{ item.quantity }} x {{ item.title }} 
+                        <span class="check-glass" ng-class="{'active': item.is_small_price=='1'}" ng-click="update_glass($index)"><b ng-if="item.is_small_price=='1'"><i class="fa fa-check-square"></i> Small Glass</b><b ng-if="item.is_small_price!='1'">Large Glass</b></span>
+                        <!-- <input type="checkbox" ng-model="is_small" id="is_small_{{$index}}" ng-click="getSmallPrice($index)" />
+                        <label for="is_small_{{$index}}">Is Small</label> -->
+                    </li>
                 </ul>
             </div>
             <div class="col-md-2 text-right total-item">

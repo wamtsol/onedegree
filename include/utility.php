@@ -1179,7 +1179,8 @@ function get_order( $id ) {
 				"id" => $r[ "item_id" ],
 				"title" => unslash( $r[ "title" ] ),
 				"unit_price" => (float)$r[ "unit_price" ],
-				"quantity" => (int)$r[ "quantity" ]
+				"quantity" => (int)$r[ "quantity" ],
+				"is_small_price" => (int)$r[ "is_small_glass" ]
 			);
 		}
 	}

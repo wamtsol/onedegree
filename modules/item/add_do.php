@@ -9,7 +9,7 @@ if(isset($_POST["items_add"])){
 		$err.="Image format not supported. <br>";
 	}
 	if($err==""){
-		$sql="INSERT INTO items (item_category_id, type, title, unit_price, quantity, sortorder) VALUES ('".slash($item_category_id)."','".slash($type)."','".slash($title)."','".slash($unit_price)."','".slash($quantity)."', '".slash($sortorder)."')";
+		$sql="INSERT INTO items (item_category_id, type, title, unit_price, small_glass_price, quantity, sortorder) VALUES ('".slash($item_category_id)."','".slash($type)."','".slash($title)."','".slash($unit_price)."','".slash($small_glass_price)."','".slash($quantity)."', '".slash($sortorder)."')";
 		doquery($sql,$dblink);
 		$id = inserted_id();
 		if(!empty($_FILES["image"]["tmp_name"])){
